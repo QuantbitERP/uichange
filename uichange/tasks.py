@@ -1,6 +1,7 @@
 import frappe
 import shutil
 import os
+import subprocess
 from frappe.utils import now
 
 def replace_workspace_with_modern_ui():
@@ -29,9 +30,31 @@ def replace_workspace_with_modern_ui():
         frappe.logger().info(f"Successfully replaced workspace.js with modern-ui.js")
         frappe.db.commit()
         
+        # Run bench build command automatically
+        try:
+            frappe.logger().info("Running bench build command...")
+            # bench_path = os.path.dirname(os.path.dirname(frappe.get_app_path('frappe')))
+            result = subprocess.run(
+                ['bench', 'build']
+            )
+            
+            if result.returncode == 0:
+                frappe.logger().info("Bench build completed successfully")
+                build_message = "Bench build completed successfully"
+            else:
+                frappe.logger().error(f"Bench build failed: {result.stderr}")
+                build_message = f"Bench build failed: {result.stderr}"
+                
+        except subprocess.TimeoutExpired:
+            frappe.logger().error("Bench build timed out after 5 minutes")
+            build_message = "Bench build timed out after 5 minutes"
+        except Exception as e:
+            frappe.logger().error(f"Error running bench build: {str(e)}")
+            build_message = f"Error running bench build: {str(e)}"
+        
         return {
             "status": "success",
-            "message": f"Workspace.js replaced with modern UI. Backup created at: {backup_path}",
+            "message": f"Workspace.js replaced with modern UI. Backup created at: {backup_path}. {build_message}",
             "timestamp": now()
         }
         
