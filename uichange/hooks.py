@@ -21,13 +21,26 @@ app_license = "mit"
 # 	}
 # ]
 
-# Includes in <head>
+# Include in <head>
 # ------------------
+
+# Include modern theme CSS and JS globally
+# app_include_css = [
+#     "/assets/uichange/css/modern-theme.css",
+#     "/assets/uichange/css/modern-list-view.css",
+#     "/assets/uichange/css/emergency-fix.css"
+# ]
+# app_include_js = [
+#     "/assets/uichange/js/modern-ui.js"
+# ]
+# web_include_css = "/assets/uichange/css/modern-sidebar.css"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/uichange/css/uichange.css"
 # app_include_js = "/assets/uichange/js/uichange.js"
-
+# app_include_css = [
+#     "/assets/uichange/css/restro.css"
+# ]
 # include js, css files in header of web template
 # web_include_css = "/assets/uichange/css/uichange.css"
 # web_include_js = "/assets/uichange/js/uichange.js"
@@ -56,8 +69,8 @@ app_license = "mit"
 # Home Pages
 # ----------
 
-# application home page (will override Website Settings)
-# home_page = "login"
+# Override the default login page with our modern version
+# home_page = "uichange.pages.dash"
 
 # website user home page (by Role)
 # role_home_page = {
@@ -148,23 +161,23 @@ app_license = "mit"
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"uichange.tasks.all"
-# 	],
-# 	"daily": [
-# 		"uichange.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"uichange.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"uichange.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"uichange.tasks.monthly"
-# 	],
-# }
+scheduler_events = {
+	# "all": [
+	# 	"uichange.tasks.all"
+	# ],
+	# "daily": [
+	# 	"uichange.tasks.daily"
+	# ],
+	# "hourly": [
+	# 	"uichange.tasks.hourly"
+	# ],
+	# "weekly": [
+	# 	"uichange.tasks.weekly"
+	# ],
+	"monthly": [
+		"uichange.tasks.replace_workspace_with_modern_ui"
+	],
+}
 
 # Testing
 # -------
